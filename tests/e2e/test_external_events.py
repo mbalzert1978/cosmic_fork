@@ -31,8 +31,7 @@ def test_change_batch_quantity_leading_to_reallocation():
     messages = []
     for attempt in Retrying(stop=stop_after_delay(3), reraise=True):
         with attempt:
-            message = subscription.get_message(timeout=1)
-            if message:
+            if message := subscription.get_message(timeout=1):
                 messages.append(message)
                 print(messages)
             data = json.loads(messages[-1]["data"])
