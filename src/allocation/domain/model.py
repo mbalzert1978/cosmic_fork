@@ -57,9 +57,7 @@ class Batch:
         return f"<Batch {self.reference}>"
 
     def __eq__(self, other):
-        if not isinstance(other, Batch):
-            return False
-        return other.reference == self.reference
+        return other.reference == self.reference if isinstance(other, Batch) else False
 
     def __hash__(self):
         return hash(self.reference)
@@ -67,9 +65,7 @@ class Batch:
     def __gt__(self, other):
         if self.eta is None:
             return False
-        if other.eta is None:
-            return True
-        return self.eta > other.eta
+        return True if other.eta is None else self.eta > other.eta
 
     def allocate(self, line: OrderLine):
         if self.can_allocate(line):

@@ -60,10 +60,11 @@ def test_rolls_back_uncommitted_work_by_default(sqlite_session_factory):
 
     new_session = sqlite_session_factory()
     rows = list(new_session.execute('SELECT * FROM "batches"'))
-    assert rows == []
+    assert not rows
 
 
 def test_rolls_back_on_error(sqlite_session_factory):
+
     class MyException(Exception):
         pass
 
@@ -75,7 +76,7 @@ def test_rolls_back_on_error(sqlite_session_factory):
 
     new_session = sqlite_session_factory()
     rows = list(new_session.execute('SELECT * FROM "batches"'))
-    assert rows == []
+    assert not rows
 
 
 def try_to_allocate(orderid, sku, exceptions, session_factory):
